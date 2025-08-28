@@ -147,6 +147,8 @@ namespace ExamAcademyDB
 
                 foreach (var g in query5)
                     Console.WriteLine("task5: " + g);
+
+                //GG
             }
         }
     }
