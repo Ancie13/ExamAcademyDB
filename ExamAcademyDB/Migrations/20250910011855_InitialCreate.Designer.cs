@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamAcademyDB.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250828021414_InitialCreate")]
+    [Migration("20250910011855_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -130,19 +130,16 @@ namespace ExamAcademyDB.Migrations
 
             modelBuilder.Entity("ExamAcademyDB.GroupsCurators", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CuratorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("GroupId", "CuratorId");
 
                     b.HasIndex("CuratorId");
 
@@ -154,19 +151,16 @@ namespace ExamAcademyDB.Migrations
 
             modelBuilder.Entity("ExamAcademyDB.GroupsLectures", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<int>("LectureId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupId", "LectureId");
 
                     b.HasIndex("LectureId");
 
@@ -178,19 +172,16 @@ namespace ExamAcademyDB.Migrations
 
             modelBuilder.Entity("ExamAcademyDB.GroupsStudents", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupId", "StudentId");
 
                     b.HasIndex("StudentId");
 
@@ -323,13 +314,13 @@ namespace ExamAcademyDB.Migrations
             modelBuilder.Entity("ExamAcademyDB.GroupsCurators", b =>
                 {
                     b.HasOne("ExamAcademyDB.Curators", "Curator")
-                        .WithMany()
+                        .WithMany("GroupsCurators")
                         .HasForeignKey("CuratorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ExamAcademyDB.Groups", "Group")
-                        .WithMany()
+                        .WithMany("GroupsCurators")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -342,13 +333,13 @@ namespace ExamAcademyDB.Migrations
             modelBuilder.Entity("ExamAcademyDB.GroupsLectures", b =>
                 {
                     b.HasOne("ExamAcademyDB.Groups", "Group")
-                        .WithMany()
+                        .WithMany("GroupsLectures")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ExamAcademyDB.Lectures", "Lecture")
-                        .WithMany()
+                        .WithMany("GroupsLectures")
                         .HasForeignKey("LectureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -367,7 +358,7 @@ namespace ExamAcademyDB.Migrations
                         .IsRequired();
 
                     b.HasOne("ExamAcademyDB.Students", "Student")
-                        .WithMany()
+                        .WithMany("GroupsStudents")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -396,7 +387,26 @@ namespace ExamAcademyDB.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("ExamAcademyDB.Curators", b =>
+                {
+                    b.Navigation("GroupsCurators");
+                });
+
             modelBuilder.Entity("ExamAcademyDB.Groups", b =>
+                {
+                    b.Navigation("GroupsCurators");
+
+                    b.Navigation("GroupsLectures");
+
+                    b.Navigation("GroupsStudents");
+                });
+
+            modelBuilder.Entity("ExamAcademyDB.Lectures", b =>
+                {
+                    b.Navigation("GroupsLectures");
+                });
+
+            modelBuilder.Entity("ExamAcademyDB.Students", b =>
                 {
                     b.Navigation("GroupsStudents");
                 });

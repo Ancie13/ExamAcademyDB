@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExamAcademyDB
 {
-    class Curators
+    public class Curators
     {
         [Key]
         public int Id { get; set; }
@@ -17,5 +17,7 @@ namespace ExamAcademyDB
 
         [Required]
         public string Surname { get; set; }
+
+        public ICollection<GroupsCurators> GroupsCurators { get; set; }
     }
 }

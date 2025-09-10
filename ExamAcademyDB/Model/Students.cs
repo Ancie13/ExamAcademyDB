@@ -21,5 +21,7 @@ namespace ExamAcademyDB
 
         [Required]
         public string Surname { get; set; }
+
+        public ICollection<GroupsStudents> GroupsStudents { get; set; }
     }
 }

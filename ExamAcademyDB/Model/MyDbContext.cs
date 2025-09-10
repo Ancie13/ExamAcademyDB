@@ -52,6 +52,48 @@ namespace ExamAcademyDB
             modelBuilder.Entity<GroupsStudents>()
                 .HasIndex(gs => new { gs.GroupId, gs.StudentId })
                 .IsUnique();
+
+            //--------------------------------------------GroupsStudents
+            modelBuilder.Entity<GroupsStudents>()
+                .HasKey(gs => new { gs.GroupId, gs.StudentId });
+
+            modelBuilder.Entity<GroupsStudents>()
+                .HasOne(gs => gs.Group)
+                .WithMany(g => g.GroupsStudents)
+                .HasForeignKey(gs => gs.GroupId);
+
+            modelBuilder.Entity<GroupsStudents>()
+                .HasOne(gs => gs.Student)
+                .WithMany(s => s.GroupsStudents)
+                .HasForeignKey(gs => gs.StudentId);
+
+            //--------------------------------------------GroupsLectures
+            modelBuilder.Entity<GroupsLectures>()
+                .HasKey(gl => new { gl.GroupId, gl.LectureId });
+
+            modelBuilder.Entity<GroupsLectures>()
+                .HasOne(gl => gl.Group)
+                .WithMany(g => g.GroupsLectures)
+                .HasForeignKey(gl => gl.GroupId);
+
+            modelBuilder.Entity<GroupsLectures>()
+                .HasOne(gl => gl.Lecture)
+                .WithMany(l => l.GroupsLectures)
+                .HasForeignKey(gl => gl.LectureId);
+
+            //--------------------------------------------GroupsCurators
+            modelBuilder.Entity<GroupsCurators>()
+                .HasKey(gc => new { gc.GroupId, gc.CuratorId });
+
+            modelBuilder.Entity<GroupsCurators>()
+                .HasOne(gc => gc.Group)
+                .WithMany(g => g.GroupsCurators)
+                .HasForeignKey(gc => gc.GroupId);
+
+            modelBuilder.Entity<GroupsCurators>()
+                .HasOne(gc => gc.Curator)
+                .WithMany(c => c.GroupsCurators)
+                .HasForeignKey(gc => gc.CuratorId);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

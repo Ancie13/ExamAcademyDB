@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ExamAcademyDB
 {
-    class GroupsCurators
+    public class GroupsCurators
     {
         [Key]
         public int Id { get; set; }

@@ -156,14 +156,13 @@ namespace ExamAcademyDB.Migrations
                 name: "GroupCurators",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    CuratorId = table.Column<int>(type: "int", nullable: false)
+                    CuratorId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupCurators", x => x.Id);
+                    table.PrimaryKey("PK_GroupCurators", x => new { x.GroupId, x.CuratorId });
                     table.ForeignKey(
                         name: "FK_GroupCurators_Curators_CuratorId",
                         column: x => x.CuratorId,
@@ -182,14 +181,13 @@ namespace ExamAcademyDB.Migrations
                 name: "GroupLectures",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    LectureId = table.Column<int>(type: "int", nullable: false)
+                    LectureId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupLectures", x => x.Id);
+                    table.PrimaryKey("PK_GroupLectures", x => new { x.GroupId, x.LectureId });
                     table.ForeignKey(
                         name: "FK_GroupLectures_Groups_GroupId",
                         column: x => x.GroupId,
@@ -208,14 +206,13 @@ namespace ExamAcademyDB.Migrations
                 name: "GroupStudents",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false)
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupStudents", x => x.Id);
+                    table.PrimaryKey("PK_GroupStudents", x => new { x.GroupId, x.StudentId });
                     table.ForeignKey(
                         name: "FK_GroupStudents_Groups_GroupId",
                         column: x => x.GroupId,
