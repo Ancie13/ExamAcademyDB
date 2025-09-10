@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExamAcademyDB
 {
-    class Students
+    public class Students
     {
         [Key]
         public int Id { get; set; }
